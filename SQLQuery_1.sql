@@ -1,4 +1,7 @@
-CREATE TABLE tblanimalia (
+CREATE DATABASE db_zooTest2
+GO
+
+CREATE TABLE tbl_animalia (
     animalia_id INT PRIMARY KEY NOT NULL IDENTITY (1,1),
     animalia_type VARCHAR(30) NOT NULL
     );
@@ -112,9 +115,9 @@ VALUES
 ('care_2', 'bottle feed vitamins', 1),
 ('care_3', 'human contact_pet subject', 2), 
 ('care_4', 'clean up animal waste', 1),
-('care 5', 'move subject to exercise pen', 3), 
+('care_5', 'move subject to exercise pen', 3), 
 ('care_6', 'drain and refill aquarium', 1), 
-('care 7', 'extensive dental work', 3)
+('care_7', 'extensive dental work', 3)
 
 SELECT * FROM tbl_care;
 
@@ -184,7 +187,6 @@ species_care VARCHAR(50) NOT NULL CONSTRAINT fk_care_id FOREIGN KEY REFERENCES t
 INSERT INTO tbl_species
 (species_name, species_animalia, species_class, species_order, species_habitat, species_nutrition, species_care)
 VALUES
-
 ('brown bear', 1, 102, 3, 5007, 2200, 'care_1'), 
 ('jaguar', 1, 102, 1, 5007, 2200, 'care_4'), 
 ('penguin', 1, 100, 1, 5003, 2200, 'care_6'), 
@@ -198,6 +200,49 @@ VALUES
 
 SELECT*FROM tbl_species;
 
+SELECT * FROM tbl_care
 
 
+
+update tbl_care set care_id = 'care_5' where  care_id='care 5';
+
+update tbl_care set care_id = 'care_7' where  care_id='care 7';
+
+
+
+
+
+
+
+SELECT* FROM tbl_species WHERE species_name='chicken';
+SELECT
+a1.species_name, a2.animalia_type,
+a3.class_type, a4.order_type, a5.habitat_type,
+ a6.nutrition_type, a7.care_type
+
+FROM tbl_species a1
+INNER JOIN tbl_animalia a2 ON a2.animalia_id = a1.species_animalia
+INNER JOIN tbl_class a3 ON a3.class_id = a1.species_class
+INNER JOIN tbl_order a4 ON a4.order_id = a1.species_order
+INNER JOIN tbl_habitat a5 ON a5.habitat_id = a1.species_habitat
+INNER JOIN tbl_nutrition a6 ON a6.nutrition_id =a1.species_nutrition
+INNER JOIN tbl_care a7 ON a7.care_id = a1.species_care 
+WHERE species_name = 'brown bear'
+;
+
+SELECT
+al.species_name, a2.habitat_type, a2.habitat_cost, 
+a3. nutrition_type, a3. nutrition_cost
+FROM tbl_species al
+INNER JOIN tbl_habitat a2 ON a2.habitat_id = al.species_habitat
+INNER JOIN tbl_nutrition a3 ON a3. nutrition_id =al.species_nutrition
+WHERE species_name ='brown bear'
+;
+
+
+SELECT*FROM tbl_nutrition
+SELECT*FROM tbl_species
+
+SELECT * FROM tbl_nutrition
+INNER JOIN tbl_species ON tbl_species.species_nutrition = tbl_nutrition.nutrition_id
 
